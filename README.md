@@ -45,3 +45,25 @@ To compile a program that uses threads, you need to link it with the appropriate
 
 gcc -o program program.c -pthread
 
+# some useful function you may need to understand the project !
+
+## gettimeofday
+
+represented as follow : int gettimeofday(struct timeval *tv, struct timezone *tz);
+
+The gettimeofday function in C is used to retrieve the current time and date with high precision. It is declared in the <sys/time.h> header file 
+
+Here's a breakdown of the function parameters:
+
+tv: A pointer to a struct timeval that will be filled with the current time information.
+tz: A pointer to a struct timezone that is no longer used and can be set to "NULL" (passing NULL is generally safe).
+
+The struct timeval is defined as follows:
+
+struct timeval {
+    time_t tv_sec;      // seconds
+    suseconds_t tv_usec;   // microseconds
+};
+
+The tv_sec field represents the number of seconds since the UNIX epoch (January 1, 1970), and tv_usec represents the additional microseconds within the current second.
+The gettimeofday function returns 0 on success and -1 on failure. If an error occurs, you can examine the value of the errno variable to determine the specific error condition.
