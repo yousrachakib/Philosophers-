@@ -6,7 +6,7 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:24:27 by yochakib          #+#    #+#             */
-/*   Updated: 2023/05/13 21:29:07 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/05/13 21:59:54 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	check_error(t_info *info, int ac, char **av)
 		return(ft_putstr_fd("Error", 2), 0);
 	if (ac == 6 && info->number_of_times_each_philosopher_must_eat <= 0)
 		return(ft_putstr_fd("Error\nav[5]", 2), 0);
-	if (info->number_of_philosophers < 1)
+	if (info->number_of_philosophers < 1 || info->number_of_philosophers > 200)
 		return(ft_putstr_fd("Error\nav[1]", 2), 0);
 	if (info->time_to_die < 60)
 		return(ft_putstr_fd("Error\nav[2]", 2), 0);
