@@ -4,6 +4,35 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <pthread.h>
+
+// typedef struct s_info
+// {
+// 	int	number_of_philosophers;
+// 	int	time_to_die;
+// 	int	time_to_eat;
+// 	int	time_to_sleep;
+// 	int number_of_times_each_philosopher_must_eat;
+// 	struct t_philo *philo;
+// } t_info;
+
+// typedef struct s_philo
+// {
+// 	int philo_id;
+// 	struct t_info	*info;
+// 	pthread_mutex_t fork;
+// 	t_philo *next;
+// }t_philo;
+
+
+typedef struct t_philo
+{
+	int philo_id;
+	struct t_info	*info;
+	pthread_mutex_t fork;
+	struct t_philo *next;
+	struct t_philo *prev;
+}				t_philo;
 
 typedef struct t_info
 {
@@ -12,9 +41,12 @@ typedef struct t_info
 	int	time_to_eat;
 	int	time_to_sleep;
 	int number_of_times_each_philosopher_must_eat;
-} t_info;
+	struct t_philo *philo;
+}		t_info;
 
-
+void	creat_philo(t_info *info);
+t_philo	*create_node(int	philo_id, t_info *info);
+void	addback_node(t_philo **head, t_philo *newnode);
 void	ft_putstr_fd(char *s, int fd);
 int		ft_isdigit(char *str);
 int		check_if_numbers_valid(int ac, char **av);
