@@ -6,7 +6,7 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 21:18:18 by yochakib          #+#    #+#             */
-/*   Updated: 2023/05/15 18:57:49 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/05/15 20:06:43 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,11 @@ void	creat_philo(t_info *info)
 	tmp = info->philo;
 	while (info->philo)
 	{
-		pthread_create(&info->philo->ph, NULL,&routine, &info);
-		pthread_join(info->philo->ph, NULL);
+		pthread_create(&info->philo->ph, NULL, &routine, info->philo);
+		pthread_detach(info->philo->ph);
 		info->philo = info->philo->next;
 		if (info->philo == tmp)
 			break;
 	}
+	while (1);
 }
