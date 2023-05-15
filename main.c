@@ -6,11 +6,21 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:57:11 by yochakib          #+#    #+#             */
-/*   Updated: 2023/05/14 18:17:55 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/05/15 18:57:54 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	*routine(void *ptr)
+{
+	t_info *info;
+	
+	info = (t_info *)ptr;
+	printf("WELL RECIEVED!\n");
+	return 0;
+	
+}
 
 int	main(int ac, char **av)
 {
@@ -22,13 +32,5 @@ int	main(int ac, char **av)
 	fill_struct(&info, ac, av);
 	check_error(&info, ac, av);
 	creat_philo(&info);
-	int i = 1;
-	tmp = info.philo;
-	while (info.philo)
-	{
-		printf("====>%d\n", info.philo->philo_id);
-		info.philo = info.philo->next;
-		if (info.philo == tmp)
-			break;
-	}
+
 }

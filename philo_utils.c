@@ -6,7 +6,7 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:24:11 by yochakib          #+#    #+#             */
-/*   Updated: 2023/05/14 18:15:58 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/05/15 18:42:38 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ t_philo	*create_node(int	philo_id, t_info *info)
 	node->philo_id = philo_id;
 	pthread_mutex_init(&node->fork, NULL);
 	node->next = node;
-	node->prev = node;
 	node->info = info;
 	return (node);
 }
@@ -87,6 +86,4 @@ void	addback_node(t_philo **head, t_philo *newnode)
 	}
 	temp->next = newnode;
 	newnode->next = *head;
-	newnode->prev = temp;
-	(*head)->prev = newnode;
 }

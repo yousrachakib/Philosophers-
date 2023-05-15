@@ -6,7 +6,7 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 21:18:18 by yochakib          #+#    #+#             */
-/*   Updated: 2023/05/14 16:50:32 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/05/15 18:57:49 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,19 @@ void	fill_struct(t_info	*info, int ac, char **av)
 
 void	creat_philo(t_info *info)
 {
+	t_philo *tmp;
+
 	info->philo = NULL;
 	int i = 1;
 	while (i <= info->number_of_philosophers)
 		addback_node(&info->philo, create_node(i++, info));
+	tmp = info->philo;
+	while (info->philo)
+	{
+		pthread_create(&info->philo->ph, NULL,&routine, &info);
+		pthread_join(info->philo->ph, NULL);
+		info->philo = info->philo->next;
+		if (info->philo == tmp)
+			break;
+	}
 }
