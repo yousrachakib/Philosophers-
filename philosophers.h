@@ -14,6 +14,7 @@ typedef struct t_philo
 	struct t_info	*info;
 	pthread_mutex_t fork;
 	struct t_philo *next;
+	struct timeval	born_time;
 }				t_philo;
 
 typedef struct t_info
@@ -26,6 +27,7 @@ typedef struct t_info
 	struct t_philo *philo;
 }		t_info;
 
+size_t 	gettime(t_philo	*philo);
 void	*routine(void *ptr);
 void	creat_philo(t_info *info);
 t_philo	*create_node(int	philo_id, t_info *info);

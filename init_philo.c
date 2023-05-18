@@ -6,7 +6,7 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 21:18:18 by yochakib          #+#    #+#             */
-/*   Updated: 2023/05/15 20:06:43 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/05/18 19:48:12 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	fill_struct(t_info	*info, int ac, char **av)
 
 void	creat_philo(t_info *info)
 {
+	
 	t_philo *tmp;
 
 	info->philo = NULL;
@@ -32,7 +33,8 @@ void	creat_philo(t_info *info)
 		addback_node(&info->philo, create_node(i++, info));
 	tmp = info->philo;
 	while (info->philo)
-	{
+	{	
+		gettimeofday(&info->philo->born_time, NULL);
 		pthread_create(&info->philo->ph, NULL, &routine, info->philo);
 		pthread_detach(info->philo->ph);
 		info->philo = info->philo->next;
