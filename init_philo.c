@@ -6,7 +6,7 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 21:18:18 by yochakib          #+#    #+#             */
-/*   Updated: 2023/05/18 19:48:12 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/05/18 21:02:37 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	fill_struct(t_info	*info, int ac, char **av)
 {
+	pthread_mutex_init(&info->print, NULL);
 	info->number_of_philosophers = ft_atoi(av[1]);
 	info->time_to_die = ft_atoi(av[2]);
 	info->time_to_eat = ft_atoi(av[3]);

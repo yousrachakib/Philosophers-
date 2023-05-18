@@ -6,7 +6,7 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:57:11 by yochakib          #+#    #+#             */
-/*   Updated: 2023/05/18 20:44:09 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/05/18 21:03:37 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,16 @@ size_t 	gettime(t_philo	*philo)
 	return (tv);
 }
 
+void	print(char *str, t_philo *philo)
+{
+	size_t	value;
+	pthread_mutex_lock(&philo->info->print);
+	value = (gettime(philo) - \
+		((philo->born_time.tv_sec * 1000) + (philo->born_time.tv_usec / 1000)));
+	printf("%zu %d %s ", value, (*philo).philo_id, str);
+	pthread_mutex_unlock(&philo->info->print);
+}
+
 void	*routine(void *ptr)
 {
 	t_philo *philo;
@@ -30,16 +40,16 @@ void	*routine(void *ptr)
 	while (1)
 	{
 		pthread_mutex_lock(&philo->fork);
-		printf("%zu %d has taken a fork\n", (gettime(philo) - ((philo->born_time.tv_sec * 1000) + (philo->born_time.tv_usec / 1000))), philo->philo_id);
+		print("has taken a fork\n",philo);
 		pthread_mutex_lock(&philo->next->fork);
-		printf("%zu %d has taken a fork\n", (gettime(philo) - ((philo->born_time.tv_sec * 1000) + (philo->born_time.tv_usec / 1000))),philo->philo_id);
-		printf("%zu %d is eating\n",(gettime(philo) - ((philo->born_time.tv_sec * 1000) + (philo->born_time.tv_usec / 1000))),philo->philo_id);
+		print("has taken a fork\n", philo);
+		print("is eating\n", philo);
 		usleep(philo->info->time_to_eat * 1000);
 		pthread_mutex_unlock(&philo->fork);
 		pthread_mutex_unlock(&philo->next->fork);
-		printf("%zu %d is sleeping\n", (gettime(philo) - ((philo->born_time.tv_sec * 1000) + (philo->born_time.tv_usec / 1000))),philo->philo_id);
+		print("is sleeping\n", philo);
 		usleep(philo->info->time_to_sleep * 1000);
-		printf("%zu %d is thinking\n", (gettime(philo) - ((philo->born_time.tv_sec * 1000) + (philo->born_time.tv_usec/ 1000))),philo->philo_id);
+		print("is thinking\n", philo);
 	}
 	return NULL;
 }

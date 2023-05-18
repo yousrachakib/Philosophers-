@@ -19,6 +19,7 @@ typedef struct t_philo
 
 typedef struct t_info
 {
+	pthread_mutex_t	print;
 	int	number_of_philosophers;
 	int	time_to_die;
 	int	time_to_eat;
