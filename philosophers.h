@@ -21,6 +21,7 @@ typedef struct t_philo
 
 typedef struct t_info
 {
+	int is_dead;
 	pthread_mutex_t	death_lock;
 	pthread_mutex_t	print_lock;
 	pthread_mutex_t	meals_counter_lock;
@@ -32,6 +33,7 @@ typedef struct t_info
 	struct t_philo *philo;
 }		t_info;
 
+void check_death(t_info *info);
 void	print(char *str, t_philo *philo);
 long long 	gettime(t_philo	*philo);
 void	*routine(void *ptr);

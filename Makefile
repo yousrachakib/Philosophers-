@@ -1,5 +1,5 @@
 
-CC = gcc -pthread
+CC = gcc 
 FLAGS = -Wall -Wextra -Werror -fsanitize=thread -g
 NAME = philo
 SRC = init_philo.c \

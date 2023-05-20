@@ -6,7 +6,7 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:57:11 by yochakib          #+#    #+#             */
-/*   Updated: 2023/05/20 15:09:50 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/05/20 21:19:51 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,11 @@ void	print(char *str, t_philo *philo)
 	pthread_mutex_lock(&philo->info->print_lock);
 	value = (gettime(philo) - \
 		((philo->born_time.tv_sec * 1000) + (philo->born_time.tv_usec / 1000)));
-	printf("%lld %d %s ", value, (*philo).philo_id, str);
-	pthread_mutex_unlock(&philo->info->print_lock);
+	if (philo->info->is_dead == 0)
+	{
+		printf("%lld %d %s ", value, (*philo).philo_id, str);
+		pthread_mutex_unlock(&philo->info->print_lock);
+	}
 }
 
 void	*routine(void *ptr)
@@ -44,9 +47,9 @@ void	*routine(void *ptr)
 		print("is eating\n", philo);
 		pthread_mutex_lock(&philo->info->meals_counter_lock);
 		philo->meals_counter++;
-		philo->last_meal = gettime(philo);
 		pthread_mutex_unlock(&philo->info->meals_counter_lock);
 		usleep(philo->info->time_to_eat * 1000);
+		philo->last_meal = gettime(philo);
 		pthread_mutex_unlock(&philo->fork);
 		pthread_mutex_unlock(&philo->next->fork);
 		print("is sleeping\n", philo);
@@ -65,6 +68,6 @@ int	main(int ac, char **av)
 	fill_struct(&info, ac, av);
 	check_error(&info, ac, av);
 	creat_philo(&info);
-	
-
+	check_death(&info);
+	return (0);
 }
