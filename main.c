@@ -6,28 +6,26 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 20:57:11 by yochakib          #+#    #+#             */
-/*   Updated: 2023/05/18 21:03:37 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/05/20 15:09:50 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-size_t 	gettime(t_philo	*philo)
+long long 	gettime(t_philo	*philo)
 {
-	size_t	tv;
 	struct timeval time;
 	gettimeofday(&time, NULL);
-	tv = ((time.tv_sec * 1000) + (time.tv_usec / 1000));
-	return (tv);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
 void	print(char *str, t_philo *philo)
 {
-	size_t	value;
-	pthread_mutex_lock(&philo->info->print);
+	long long	value;
+	pthread_mutex_lock(&philo->info->print_lock);
 	value = (gettime(philo) - \
 		((philo->born_time.tv_sec * 1000) + (philo->born_time.tv_usec / 1000)));
-	printf("%zu %d %s ", value, (*philo).philo_id, str);
-	pthread_mutex_unlock(&philo->info->print);
+	printf("%lld %d %s ", value, (*philo).philo_id, str);
+	pthread_mutex_unlock(&philo->info->print_lock);
 }
 
 void	*routine(void *ptr)
@@ -44,6 +42,10 @@ void	*routine(void *ptr)
 		pthread_mutex_lock(&philo->next->fork);
 		print("has taken a fork\n", philo);
 		print("is eating\n", philo);
+		pthread_mutex_lock(&philo->info->meals_counter_lock);
+		philo->meals_counter++;
+		philo->last_meal = gettime(philo);
+		pthread_mutex_unlock(&philo->info->meals_counter_lock);
 		usleep(philo->info->time_to_eat * 1000);
 		pthread_mutex_unlock(&philo->fork);
 		pthread_mutex_unlock(&philo->next->fork);

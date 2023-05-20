@@ -11,6 +11,8 @@ typedef struct t_philo
 {
 	pthread_t	ph;
 	int philo_id;
+	int	meals_counter;
+	long long last_meal;
 	struct t_info	*info;
 	pthread_mutex_t fork;
 	struct t_philo *next;
@@ -19,7 +21,9 @@ typedef struct t_philo
 
 typedef struct t_info
 {
-	pthread_mutex_t	print;
+	pthread_mutex_t	death_lock;
+	pthread_mutex_t	print_lock;
+	pthread_mutex_t	meals_counter_lock;
 	int	number_of_philosophers;
 	int	time_to_die;
 	int	time_to_eat;
@@ -28,7 +32,8 @@ typedef struct t_info
 	struct t_philo *philo;
 }		t_info;
 
-size_t 	gettime(t_philo	*philo);
+void	print(char *str, t_philo *philo);
+long long 	gettime(t_philo	*philo);
 void	*routine(void *ptr);
 void	creat_philo(t_info *info);
 t_philo	*create_node(int	philo_id, t_info *info);
