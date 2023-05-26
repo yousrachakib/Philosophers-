@@ -1,50 +1,45 @@
- #ifndef PHILOSOPHERS_H
- #define PHILOSOPHERS_H
+# ifndef PHILOSOPHERS_H
+# define PHILOSOPHERS_H
 
 #include <unistd.h>
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <pthread.h>
 #include <sys/time.h>
 
 typedef struct t_philo
 {
+	pthread_mutex_t	fork;
 	pthread_t	ph;
-	int philo_id;
-	int	meals_counter;
-	long long last_meal;
-	struct t_info	*info;
-	pthread_mutex_t fork;
-	struct t_philo *next;
+	int	philo_id;
+	int meals_counter;
+	struct t_philo	*next;
+	struct t_list *info;
 	struct timeval	born_time;
-}				t_philo;
+}	t_philo;
 
-typedef struct t_info
+typedef	struct t_list
 {
-	int is_dead;
-	pthread_mutex_t	death_lock;
-	pthread_mutex_t	print_lock;
 	pthread_mutex_t	meals_counter_lock;
-	int	number_of_philosophers;
+	pthread_mutex_t	print_lock;
+	int number_of_philosophers;
 	int	time_to_die;
 	int	time_to_eat;
-	int	time_to_sleep;
+	int time_to_sleep;
 	int number_of_times_each_philosopher_must_eat;
 	struct t_philo *philo;
-}		t_info;
+}	t_list;
 
-void check_death(t_info *info);
-void	print(char *str, t_philo *philo);
-long long 	gettime(t_philo	*philo);
-void	*routine(void *ptr);
-void	creat_philo(t_info *info);
-t_philo	*create_node(int	philo_id, t_info *info);
+int	ft_atoi(char	*str);
+void	ft_putstr_fd(char *str, int fd);
+void	ft_putchar_fd(char c, int fd);
+int	check_error(t_list *info, int ac, char **av);
+t_philo	*create_node(int philo_id, t_list *info);
 void	addback_node(t_philo **head, t_philo *newnode);
-void	ft_putstr_fd(char *s, int fd);
-int		ft_isdigit(char *str);
-int		check_if_numbers_valid(int ac, char **av);
-int		check_error(t_info *info, int ac, char **av);
-int		ft_atoi(char	*str);
-void	fill_struct(t_info	*info, int ac, char **av);
-
- #endif
+void	*routine(void *arg);
+void	fill_struct(t_list *info, int ac, char **av);
+void	creat_philo(t_list	*info);
+long long	gettime(void);
+void	ft_usleep(long long n);
+void	print(char *str, t_philo *philo);
+#endif

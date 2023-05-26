@@ -5,69 +5,65 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/13 20:57:11 by yochakib          #+#    #+#             */
-/*   Updated: 2023/05/20 21:19:51 by yochakib         ###   ########.fr       */
+/*   Created: 2023/05/25 21:21:46 by yochakib          #+#    #+#             */
+/*   Updated: 2023/05/26 19:52:36 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-long long 	gettime(t_philo	*philo)
+
+void	ft_usleep(long long n)
 {
-	struct timeval time;
+	long long	tv;
+
+	tv = gettime();
+	while ((gettime() ) <= (tv + n))
+		usleep(100);
+}
+
+long long	gettime(void)
+{
+	struct timeval	time;
+
 	gettimeofday(&time, NULL);
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-void	print(char *str, t_philo *philo)
+void	*routine(void *arg)
 {
-	long long	value;
-	pthread_mutex_lock(&philo->info->print_lock);
-	value = (gettime(philo) - \
-		((philo->born_time.tv_sec * 1000) + (philo->born_time.tv_usec / 1000)));
-	if (philo->info->is_dead == 0)
-	{
-		printf("%lld %d %s ", value, (*philo).philo_id, str);
-		pthread_mutex_unlock(&philo->info->print_lock);
-	}
-}
+	t_philo	*philo;
 
-void	*routine(void *ptr)
-{
-	t_philo *philo;
-	
-	philo = (t_philo *)ptr;
-	if ((philo->philo_id % 2) == 0)
+	philo = (t_philo *) arg;
+	if ((philo->philo_id % 2))
 		usleep(200);
 	while (1)
 	{
 		pthread_mutex_lock(&philo->fork);
-		print("has taken a fork\n",philo);
-		pthread_mutex_lock(&philo->next->fork);
 		print("has taken a fork\n", philo);
-		print("is eating\n", philo);
+		pthread_mutex_lock(&philo->next->fork);
+		print(" has taken a fork\n", philo);
 		pthread_mutex_lock(&philo->info->meals_counter_lock);
-		philo->meals_counter++;
+		philo->meals_counter += 1;
 		pthread_mutex_unlock(&philo->info->meals_counter_lock);
-		usleep(philo->info->time_to_eat * 1000);
-		philo->last_meal = gettime(philo);
+		print("is eating\n", philo);
+		ft_usleep(philo->info->time_to_eat);
 		pthread_mutex_unlock(&philo->fork);
 		pthread_mutex_unlock(&philo->next->fork);
 		print("is sleeping\n", philo);
-		usleep(philo->info->time_to_sleep * 1000);
+		ft_usleep(philo->info->time_to_sleep);
 		print("is thinking\n", philo);
 	}
-	return NULL;
+	return (NULL);
 }
 
 int	main(int ac, char **av)
 {
-	t_info	info;
-	
+	t_list	info;
+
 	if (ac != 5 && ac != 6)
-		return (ft_putstr_fd("Error\nfew args", 2), 0);
+		ft_putstr_fd("Error\nfew ARGUMENTS", 2);
 	fill_struct(&info, ac, av);
 	check_error(&info, ac, av);
 	creat_philo(&info);
-	check_death(&info);
 	return (0);
 }

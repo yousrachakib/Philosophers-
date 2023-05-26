@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/13 20:24:11 by yochakib          #+#    #+#             */
-/*   Updated: 2023/05/18 17:25:50 by yochakib         ###   ########.fr       */
+/*   Created: 2023/05/25 19:57:27 by yochakib          #+#    #+#             */
+/*   Updated: 2023/05/26 16:58:05 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,17 @@ void	ft_putchar_fd(char c, int fd)
 	write(fd, &c, 1);
 }
 
-void	ft_putstr_fd(char *s, int fd)
+void	ft_putstr_fd(char *str, int fd)
 {
 	int	i;
 
 	i = 0;
-	while (s[i])
+	while (str[i])
 	{
-		ft_putchar_fd(s[i], fd);
+		ft_putchar_fd(str[i], fd);
 		i++;
 	}
+	printf("done !\n");
 }
 
 int	ft_atoi(char	*str)
@@ -54,7 +55,7 @@ int	ft_atoi(char	*str)
 	return (r * s);
 }
 
-t_philo	*create_node(int	philo_id, t_info *info)
+t_philo	*create_node(int philo_id, t_list *info)
 {
 	t_philo	*node;
 
@@ -62,28 +63,29 @@ t_philo	*create_node(int	philo_id, t_info *info)
 	if (!node)
 		return (NULL);
 	node->philo_id = philo_id;
-	pthread_mutex_init(&node->fork, NULL);
 	node->next = node;
 	node->info = info;
+	node->meals_counter = 0;
+	pthread_mutex_init(&node->fork, NULL);
 	return (node);
 }
 
 void	addback_node(t_philo **head, t_philo *newnode)
 {
-	t_philo	*temp;
-	
-	temp = *head;
+	t_philo	*tmp;
+
+	tmp = *head;
 	if (!*head)
 	{
 		*head = newnode;
 		return ;
 	}
-	while (temp)
+	while (tmp)
 	{
-		temp = temp->next;
-		if (temp->next == *head)
-			break;
+		tmp = tmp->next;
+		if (tmp->next == *head)
+			break ;
 	}
-	temp->next = newnode;
+	tmp->next = newnode;
 	newnode->next = *head;
 }
