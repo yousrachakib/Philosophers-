@@ -6,7 +6,7 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 20:12:16 by yochakib          #+#    #+#             */
-/*   Updated: 2023/05/26 19:50:43 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/05/27 12:17:52 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	fill_struct(t_list *info, int ac, char **av)
 	info->time_to_die = ft_atoi(av[2]);
 	info->time_to_eat = ft_atoi(av[3]);
 	info->time_to_sleep = ft_atoi(av[4]);
+	info->death_index = 0;
 	pthread_mutex_init(&info->meals_counter_lock, NULL); //needs protection
 	pthread_mutex_init(&info->print_lock, NULL);
 }
@@ -36,17 +37,18 @@ void	creat_philo(t_list	*info)
 		addback_node(&info->philo, create_node(i, info));
 		i++;
 	}
-	printf("****>>%d", i);
 	tmp = info->philo;
 	while (info->philo)
 	{
 		gettimeofday(&info->philo->born_time, NULL);
+		info->philo->last_meal = gettime();
 		pthread_create(&info->philo->ph, NULL, &routine, info->philo);
 		pthread_detach(info->philo->ph);
 		info->philo = info->philo->next;
 		if (info->philo->next == tmp)
 			break ;
 	}
+	// check_id_died(info);
 	while (1)
 		;
 }

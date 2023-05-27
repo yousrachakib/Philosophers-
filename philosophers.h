@@ -16,6 +16,7 @@ typedef struct t_philo
 	struct t_philo	*next;
 	struct t_list *info;
 	struct timeval	born_time;
+	long long	last_meal;
 }	t_philo;
 
 typedef	struct t_list
@@ -25,6 +26,7 @@ typedef	struct t_list
 	int number_of_philosophers;
 	int	time_to_die;
 	int	time_to_eat;
+	int death_index;
 	int time_to_sleep;
 	int number_of_times_each_philosopher_must_eat;
 	struct t_philo *philo;
@@ -42,4 +44,5 @@ void	creat_philo(t_list	*info);
 long long	gettime(void);
 void	ft_usleep(long long n);
 void	print(char *str, t_philo *philo);
+int	check_id_died(t_list *info);
 #endif

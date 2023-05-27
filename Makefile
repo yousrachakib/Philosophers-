@@ -6,6 +6,7 @@ SRC = init_philo.c \
 	main.c \
 	parsing.c \
 	philo_utils.c \
+	death.c \
 
 OBJ = $(SRC:.c=.o)
 HEADER = philosophers.h 
