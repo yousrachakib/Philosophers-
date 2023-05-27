@@ -6,7 +6,7 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 21:21:46 by yochakib          #+#    #+#             */
-/*   Updated: 2023/05/27 17:18:29 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/05/27 19:34:05 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	*routine(void *arg)
 	philo = (t_philo *) arg;
 	if ((philo->philo_id) % 2 == 0)
 		usleep(100 * 1000);
-	while (1)
+	while (philo->info->death_index == 0)
 	{
 		pthread_mutex_lock(&philo->fork);
 		print("has taken a fork\n", philo);
@@ -47,7 +47,7 @@ void	*routine(void *arg)
 		pthread_mutex_unlock(&philo->info->meals_counter_lock);
 		print("is eating\n", philo);
 		ft_usleep(philo->info->time_to_eat);
-		gettimeofday(&philo->last_meal, NULL);
+		philo->last_meal = gettime();
 		pthread_mutex_unlock(&philo->fork);
 		pthread_mutex_unlock(&philo->next->fork);
 		print("is sleeping\n", philo);
@@ -62,7 +62,10 @@ int	main(int ac, char **av)
 	t_list	info;
 
 	if (ac != 5 && ac != 6)
+	{
 		ft_putstr_fd("Error\nfew ARGUMENTS", 2);
+		return (1);
+	}
 	fill_struct(&info, ac, av);
 	check_error(&info, ac, av);
 	creat_philo(&info);

@@ -6,13 +6,13 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 20:12:16 by yochakib          #+#    #+#             */
-/*   Updated: 2023/05/27 17:22:21 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/05/27 19:43:22 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	fill_struct(t_list *info, int ac, char **av)
+void	*fill_struct(t_list *info, int ac, char **av)
 {
 	if (ac == 6)
 		info->number_of_times_each_philosopher_must_eat = ft_atoi(av[5]);
@@ -24,6 +24,7 @@ void	fill_struct(t_list *info, int ac, char **av)
 	pthread_mutex_init(&info->meals_counter_lock, NULL); //needs protection
 	pthread_mutex_init(&info->print_lock, NULL);
 	pthread_mutex_init(&info->death_lock, NULL);
+	return (0);
 }
 
 void	creat_philo(t_list	*info)
@@ -42,16 +43,15 @@ void	creat_philo(t_list	*info)
 	while (info->philo)
 	{
 		gettimeofday(&info->philo->born_time, NULL);
-		gettimeofday(&info->philo->last_meal, NULL);
+		info->philo->last_meal = gettime();
 		pthread_create(&info->philo->ph, NULL, &routine, info->philo);
 		pthread_detach(info->philo->ph);
 		info->philo = info->philo->next;
 		if (info->philo == tmp)
 			break ;
 	}
-	check_id_died(info);
-	while (1)
-		;
+	check_if_died(info);
+	usleep(100);
 }
 
 void	print(char *str, t_philo *philo)

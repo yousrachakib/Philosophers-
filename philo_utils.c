@@ -6,7 +6,7 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:57:27 by yochakib          #+#    #+#             */
-/*   Updated: 2023/05/27 15:05:10 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/05/27 19:09:21 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	ft_putstr_fd(char *str, int fd)
 		ft_putchar_fd(str[i], fd);
 		i++;
 	}
-	printf("done !\n");
 }
 
 int	ft_atoi(char	*str)

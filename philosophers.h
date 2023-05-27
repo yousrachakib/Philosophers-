@@ -16,7 +16,7 @@ typedef struct t_philo
 	struct t_philo	*next;
 	struct t_list *info;
 	struct timeval	born_time;
-	struct timeval	last_meal;
+	long long	last_meal;
 }	t_philo;
 
 typedef	struct t_list
@@ -54,10 +54,10 @@ int	check_error(t_list *info, int ac, char **av);
 t_philo	*create_node(int philo_id, t_list *info);
 void	addback_node(t_philo **head, t_philo *newnode);
 void	*routine(void *arg);
-void	fill_struct(t_list *info, int ac, char **av);
+void	*fill_struct(t_list *info, int ac, char **av);
 void	creat_philo(t_list	*info);
 long long	gettime(void);
 void	ft_usleep(long long n);
 void	print(char *str, t_philo *philo);
-int	check_id_died(t_list *info);
+void	check_if_died(t_list	*info);
 #endif
