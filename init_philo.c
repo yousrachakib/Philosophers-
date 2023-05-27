@@ -6,7 +6,7 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 20:12:16 by yochakib          #+#    #+#             */
-/*   Updated: 2023/05/27 12:17:52 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/05/27 17:22:21 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	fill_struct(t_list *info, int ac, char **av)
 	info->death_index = 0;
 	pthread_mutex_init(&info->meals_counter_lock, NULL); //needs protection
 	pthread_mutex_init(&info->print_lock, NULL);
+	pthread_mutex_init(&info->death_lock, NULL);
 }
 
 void	creat_philo(t_list	*info)
@@ -41,14 +42,14 @@ void	creat_philo(t_list	*info)
 	while (info->philo)
 	{
 		gettimeofday(&info->philo->born_time, NULL);
-		info->philo->last_meal = gettime();
+		gettimeofday(&info->philo->last_meal, NULL);
 		pthread_create(&info->philo->ph, NULL, &routine, info->philo);
 		pthread_detach(info->philo->ph);
 		info->philo = info->philo->next;
-		if (info->philo->next == tmp)
+		if (info->philo == tmp)
 			break ;
 	}
-	// check_id_died(info);
+	check_id_died(info);
 	while (1)
 		;
 }
@@ -58,7 +59,7 @@ void	print(char *str, t_philo *philo)
 	long long	time ;
 
 	pthread_mutex_lock(&philo->info->print_lock);
-	time =  (gettime() - \
+	time = (gettime() - \
 		((philo->born_time.tv_sec * 1000) + (philo->born_time.tv_usec / 1000)));
 	printf("%lld %d %s", time, philo->philo_id, str);
 	usleep(1000);

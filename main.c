@@ -6,7 +6,7 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 21:21:46 by yochakib          #+#    #+#             */
-/*   Updated: 2023/05/27 12:19:06 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/05/27 17:18:29 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_usleep(long long n)
 	long long	tv;
 
 	tv = gettime();
-	while ((gettime() ) <= (tv + n))
+	while ((gettime()) <= (tv + n))
 		usleep(100);
 }
 
@@ -34,8 +34,8 @@ void	*routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *) arg;
-	if ((philo->philo_id % 2) == 0)
-		usleep(200);
+	if ((philo->philo_id) % 2 == 0)
+		usleep(100 * 1000);
 	while (1)
 	{
 		pthread_mutex_lock(&philo->fork);
@@ -47,7 +47,7 @@ void	*routine(void *arg)
 		pthread_mutex_unlock(&philo->info->meals_counter_lock);
 		print("is eating\n", philo);
 		ft_usleep(philo->info->time_to_eat);
-		philo->last_meal = gettime();
+		gettimeofday(&philo->last_meal, NULL);
 		pthread_mutex_unlock(&philo->fork);
 		pthread_mutex_unlock(&philo->next->fork);
 		print("is sleeping\n", philo);

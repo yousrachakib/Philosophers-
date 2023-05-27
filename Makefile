@@ -1,6 +1,6 @@
 
 CC = gcc 
-FLAGS = -Wall -Wextra -Werror -fsanitize=thread -g
+FLAGS = -Wall -Wextra -Werror  -g
 NAME = philo
 SRC = init_philo.c \
 	main.c \
