@@ -15,12 +15,12 @@ typedef struct t_philo
 	int meals_counter;
 	struct t_philo	*next;
 	struct t_list *info;
-	struct timeval	born_time;
 	long long	last_meal;
 }	t_philo;
 
 typedef	struct t_list
 {
+	long long	born_time;
 	pthread_mutex_t	death_lock;
 	pthread_mutex_t	meals_counter_lock;
 	pthread_mutex_t	print_lock;

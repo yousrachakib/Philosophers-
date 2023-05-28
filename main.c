@@ -6,7 +6,7 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 21:21:46 by yochakib          #+#    #+#             */
-/*   Updated: 2023/05/27 19:34:05 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/05/28 18:36:55 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@ void	ft_usleep(long long n)
 long long	gettime(void)
 {
 	struct timeval	time;
+	long long tv;
 
 	gettimeofday(&time, NULL);
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+	tv = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	return (tv);
 }
 
 void	*routine(void *arg)

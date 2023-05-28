@@ -6,7 +6,7 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 20:12:16 by yochakib          #+#    #+#             */
-/*   Updated: 2023/05/27 19:43:22 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/05/28 18:40:03 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	creat_philo(t_list	*info)
 	tmp = info->philo;
 	while (info->philo)
 	{
-		gettimeofday(&info->philo->born_time, NULL);
+		info->born_time = gettime();
 		info->philo->last_meal = gettime();
 		pthread_create(&info->philo->ph, NULL, &routine, info->philo);
 		pthread_detach(info->philo->ph);
@@ -51,7 +51,6 @@ void	creat_philo(t_list	*info)
 			break ;
 	}
 	check_if_died(info);
-	usleep(100);
 }
 
 void	print(char *str, t_philo *philo)
@@ -59,8 +58,7 @@ void	print(char *str, t_philo *philo)
 	long long	time ;
 
 	pthread_mutex_lock(&philo->info->print_lock);
-	time = (gettime() - \
-		((philo->born_time.tv_sec * 1000) + (philo->born_time.tv_usec / 1000)));
+	time = (gettime() - philo->info->born_time);
 	printf("%lld %d %s", time, philo->philo_id, str);
 	usleep(1000);
 	pthread_mutex_unlock(&philo->info->print_lock);
