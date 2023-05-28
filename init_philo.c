@@ -6,7 +6,7 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 20:12:16 by yochakib          #+#    #+#             */
-/*   Updated: 2023/05/28 18:40:03 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/05/28 18:56:33 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,6 @@ void	print(char *str, t_philo *philo)
 {
 	long long	time ;
 
-	pthread_mutex_lock(&philo->info->print_lock);
 	time = (gettime() - philo->info->born_time);
 	printf("%lld %d %s", time, philo->philo_id, str);
-	usleep(1000);
-	pthread_mutex_unlock(&philo->info->print_lock);
 }
