@@ -6,7 +6,7 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 21:21:46 by yochakib          #+#    #+#             */
-/*   Updated: 2023/05/28 18:55:34 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/05/28 19:10:59 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ int	main(int ac, char **av)
 		return (1);
 	}
 	fill_struct(&info, ac, av);
-	check_error(&info, ac, av);
+	if (check_error(&info, ac, av) == 0)
+		return (1);
 	creat_philo(&info);
 	return (0);
 }
