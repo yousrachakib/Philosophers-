@@ -65,4 +65,5 @@ void lock_forks(t_philo *philo);
 void	start_eating(t_philo	*philo);
 void	go_bed(t_philo	*philo);
 void	now_overthink(t_philo	*philo);
+void	freelist(t_philo *head);
 #endif
