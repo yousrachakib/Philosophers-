@@ -6,7 +6,7 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 20:12:16 by yochakib          #+#    #+#             */
-/*   Updated: 2023/05/28 18:56:33 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/05/28 20:42:43 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	*fill_struct(t_list *info, int ac, char **av)
 	info->time_to_eat = ft_atoi(av[3]);
 	info->time_to_sleep = ft_atoi(av[4]);
 	info->death_index = 0;
+	info->done_eating = 0;
 	pthread_mutex_init(&info->meals_counter_lock, NULL); //needs protection
 	pthread_mutex_init(&info->print_lock, NULL);
 	pthread_mutex_init(&info->death_lock, NULL);

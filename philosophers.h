@@ -20,6 +20,7 @@ typedef struct t_philo
 
 typedef	struct t_list
 {
+	int	done_eating;
 	long long	born_time;
 	pthread_mutex_t	death_lock;
 	pthread_mutex_t	meals_counter_lock;
@@ -60,4 +61,8 @@ long long	gettime(void);
 void	ft_usleep(long long n);
 void	print(char *str, t_philo *philo);
 void	check_if_died(t_list	*info);
+void lock_forks(t_philo *philo);
+void	start_eating(t_philo	*philo);
+void	go_bed(t_philo	*philo);
+void	now_overthink(t_philo	*philo);
 #endif

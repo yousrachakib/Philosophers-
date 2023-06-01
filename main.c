@@ -6,7 +6,7 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 21:21:46 by yochakib          #+#    #+#             */
-/*   Updated: 2023/05/28 19:10:59 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/05/28 22:22:54 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,33 +38,12 @@ void	*routine(void *arg)
 	philo = (t_philo *) arg;
 	if ((philo->philo_id) % 2 == 0)
 		usleep(100 * 1000);
-	while (philo->info->death_index == 0)
+	while (1)
 	{
-		pthread_mutex_lock(&philo->fork);
-		pthread_mutex_lock(&philo->info->print_lock);
-		print("has taken a fork\n", philo);
-		pthread_mutex_unlock(&philo->info->print_lock);
-		pthread_mutex_lock(&philo->next->fork);
-		pthread_mutex_lock(&philo->info->print_lock);		
-		print(" has taken a fork\n", philo);
-		pthread_mutex_unlock(&philo->info->print_lock);
-		// pthread_mutex_lock(&philo->info->meals_counter_lock);
-		philo->meals_counter += 1;
-		// pthread_mutex_unlock(&philo->info->meals_counter_lock)
-		pthread_mutex_lock(&philo->info->print_lock);
-		print("is eating\n", philo);
-		pthread_mutex_unlock(&philo->info->print_lock);
-		ft_usleep(philo->info->time_to_eat);
-		philo->last_meal = gettime();
-		pthread_mutex_unlock(&philo->fork);
-		pthread_mutex_unlock(&philo->next->fork);
-		pthread_mutex_lock(&philo->info->print_lock);
-		print("is sleeping\n", philo);
-		pthread_mutex_unlock(&philo->info->print_lock);
-		ft_usleep(philo->info->time_to_sleep);		
-		pthread_mutex_lock(&philo->info->print_lock);
-		print("is thinking\n", philo);
-		pthread_mutex_unlock(&philo->info->print_lock);
+		lock_forks(philo);
+		start_eating(philo);
+		go_bed(philo);
+		now_overthink(philo);
 	}
 	return (NULL);
 }
