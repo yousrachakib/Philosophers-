@@ -6,7 +6,7 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 21:21:46 by yochakib          #+#    #+#             */
-/*   Updated: 2023/06/01 21:13:06 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/06/01 21:22:40 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	main(int ac, char **av)
 	if (check_error(&info, ac, av) == 0)
 		return (1);
 	creat_philo(&info);
-	freelist(&info.philo);
+	// freelist(info.philo);
 	pthread_mutex_destroy(&info.death_lock);
 	pthread_mutex_destroy(&info.meals_counter_lock);
 	pthread_mutex_destroy(&info.print_lock);

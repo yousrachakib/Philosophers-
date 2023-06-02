@@ -6,7 +6,7 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 20:38:14 by yochakib          #+#    #+#             */
-/*   Updated: 2023/06/01 21:12:42 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/06/01 21:21:48 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void freelist(t_philo *head)
     {
         next = current->next;
         free(current);
-        pthread_mutex_destroy(current->fork);
+        pthread_mutex_destroy(&current->fork);
         current = next;
     }
 }
