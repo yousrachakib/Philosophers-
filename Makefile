@@ -1,6 +1,6 @@
 
-CC = gcc 
-FLAGS = -Wall -Wextra -Werror  -g
+CC = cc 
+FLAGS = -Wall -Wextra -Werror
 NAME = philo
 SRC = init_philo.c \
 	main.c \
