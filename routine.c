@@ -6,7 +6,7 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 21:59:24 by yochakib          #+#    #+#             */
-/*   Updated: 2023/06/01 21:36:58 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/06/10 12:21:22 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	lock_forks(t_philo *philo)
 	pthread_mutex_unlock(&philo->info->print_lock);
 	pthread_mutex_lock(&philo->next->fork);
 	pthread_mutex_lock(&philo->info->print_lock);
-	print(" has taken a fork\n", philo);
+	print("has taken a fork\n", philo);
 	pthread_mutex_unlock(&philo->info->print_lock);
 }
 

@@ -6,7 +6,7 @@
 /*   By: yochakib <yochakib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 21:21:46 by yochakib          #+#    #+#             */
-/*   Updated: 2023/06/01 21:22:40 by yochakib         ###   ########.fr       */
+/*   Updated: 2023/06/10 12:37:01 by yochakib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_usleep(long long n)
 long long	gettime(void)
 {
 	struct timeval	time;
-	long long tv;
+	long long		tv;
 
 	gettimeofday(&time, NULL);
 	tv = (time.tv_sec * 1000) + (time.tv_usec / 1000);
@@ -61,7 +61,6 @@ int	main(int ac, char **av)
 	if (check_error(&info, ac, av) == 0)
 		return (1);
 	creat_philo(&info);
-	// freelist(info.philo);
 	pthread_mutex_destroy(&info.death_lock);
 	pthread_mutex_destroy(&info.meals_counter_lock);
 	pthread_mutex_destroy(&info.print_lock);
